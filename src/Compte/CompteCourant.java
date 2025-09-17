@@ -9,9 +9,10 @@ public class CompteCourant extends Compte{
 
     private static double decouvert = 1000;
 
-    public CompteCourant(double solde, String code){
+    public CompteCourant(double solde, String code, String password){
         setCode(code);
         setSolde(solde);
+        setPassword(password);
     }
 
     public String retirer(double montant){

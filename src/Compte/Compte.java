@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public abstract class Compte {
     private String code;
     private double solde;
+    private String password;
     private ArrayList<String> listOperations = new ArrayList<>();
 
     public String getCode() {
@@ -35,4 +36,12 @@ public abstract class Compte {
     public abstract String retirer(double montant);
     public abstract double calculerInteret();
     public abstract ArrayList<String> afficherDetails();
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
