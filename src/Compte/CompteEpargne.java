@@ -10,8 +10,8 @@ public class CompteEpargne extends Compte{
         setSolde(solde);
     }
 
-    public void retirer(){
-
+    public String retirer(double montant){
+        return "ah";
     }
     public double calculerInteret(){
         return 0;

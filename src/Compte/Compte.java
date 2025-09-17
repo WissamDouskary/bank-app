@@ -32,7 +32,7 @@ public abstract class Compte {
     }
 
 
-    public abstract void retirer();
+    public abstract String retirer(double montant);
     public abstract double calculerInteret();
     public abstract ArrayList<String> afficherDetails();
 }
