@@ -3,7 +3,7 @@ package Compte;
 import java.util.ArrayList;
 
 public class CompteEpargne extends Compte{
-    private float tauxInteret;
+    private static double tauxInteret = 0.04;
 
     public CompteEpargne(double solde, String code, String password){
         setCode(code);
@@ -12,10 +12,25 @@ public class CompteEpargne extends Compte{
     }
 
     public String retirer(double montant){
-        return "ah";
+        String message = null;
+        if(getSolde() >= montant){
+            setSolde(getSolde() - montant);
+
+            message = "Withdraw completed successfuly!";
+        }else{
+            message = "you don't have enough money!";
+        }
+        return message;
     }
-    public double calculerInteret(){
-        return 0;
+
+    public double calculerInteret() {
+        return getSolde() * tauxInteret;
+
+    }
+
+    public void appliquerInteret() {
+        setSolde(getSolde() + calculerInteret());
+        System.out.println("Interest : " + calculerInteret());
     }
 
     public ArrayList<String> afficherDetails(){

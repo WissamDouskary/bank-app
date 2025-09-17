@@ -1,6 +1,7 @@
 import Compte.Compte;
 import Compte.CompteCourant;
 import Compte.CompteEpargne;
+import sun.rmi.runtime.Log;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -54,7 +55,7 @@ public class Main {
     }
 
     public static void main(String[] args){
-
+        boolean isClaimed = false;
         while(true){
             if(!isLoggedIn && LoggedInAccount == null){
                 System.out.println("BANK ACCOUNT ----");
@@ -63,6 +64,8 @@ public class Main {
                 System.out.println("3. Exit");
                 System.out.println("Choose a number (1-3): ");
                 int choice = sc.nextInt();
+
+                sc.nextLine();
 
                 switch (choice){
                     case 1:
@@ -124,10 +127,20 @@ public class Main {
                 System.out.println("BANK ACCOUNT ----");
                 System.out.println("1. Account Information");
                 System.out.println("2. Withdraw");
-                System.out.println("3. Logout");
-                System.out.println("Choose a number (1-3): ");
+                if(LoggedInAccount instanceof CompteEpargne){
+                    if(!isClaimed){
+                        System.out.println("3. Apply Interet");
+                    }
+                    System.out.println(isClaimed ? "3. Logout" : "4. Logout");
+                }
+                if(LoggedInAccount instanceof CompteCourant){
+                    System.out.println("3. Logout");
+                }
+                System.out.println("Choose a number: ");
 
                 int choice = sc.nextInt();
+
+                sc.nextLine();
 
                 switch (choice) {
                     case 1:
@@ -146,13 +159,32 @@ public class Main {
                         System.out.println(LoggedInAccount.retirer(amount));
                         break;
                     case 3:
-                        System.out.println("LOGOUT --------");
-                        System.out.println("Do you want to log out (1. Yes / 2. No): ");
-                        int wantToLogOut = sc.nextInt();
-                        if (wantToLogOut == 1) {
-                            isLoggedIn = false;
-                            LoggedInAccount = null;
-                            System.out.println("You have successfully logged out.");
+                        if(LoggedInAccount instanceof CompteEpargne){
+                            CompteEpargne epargneAccount = (CompteEpargne) LoggedInAccount;
+                            epargneAccount.appliquerInteret();
+                            isClaimed = true;
+                            System.out.println("Congratulations, Interet applicated successfuly!");
+                        }else{
+                            System.out.println("LOGOUT --------");
+                            System.out.println("Do you want to log out (1. Yes / 2. No): ");
+                            int wantToLogOut = sc.nextInt();
+                            if (wantToLogOut == 1) {
+                                isLoggedIn = false;
+                                LoggedInAccount = null;
+                                System.out.println("You have successfully logged out.");
+                            }
+                        }
+                        break;
+                    case 4:
+                        if(LoggedInAccount instanceof CompteEpargne){
+                            System.out.println("LOGOUT --------");
+                            System.out.println("Do you want to log out (1. Yes / 2. No): ");
+                            int wantToLogOut = sc.nextInt();
+                            if (wantToLogOut == 1) {
+                                isLoggedIn = false;
+                                LoggedInAccount = null;
+                                System.out.println("You have successfully logged out.");
+                            }
                         }
                         break;
                     default:

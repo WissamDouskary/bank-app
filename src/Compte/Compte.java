@@ -32,7 +32,6 @@ public abstract class Compte {
         return listOperations;
     }
 
-
     public abstract String retirer(double montant);
     public abstract double calculerInteret();
     public abstract ArrayList<String> afficherDetails();
