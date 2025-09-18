@@ -4,6 +4,7 @@ import Compte.CompteEpargne;
 import sun.rmi.runtime.Log;
 
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -15,12 +16,12 @@ public class Main {
 
     public static Compte createAccount(int type, String code, String password) {
         if (type == 1) {
-            CompteCourant newCompte = new CompteCourant(150.0, code, password);
+            Compte newCompte = new CompteCourant(150.0, code, password);
             comptes.put(code, newCompte);
             LoggedInAccount = newCompte;
             return newCompte;
         } else if (type == 2) {
-            CompteEpargne newCompte = new CompteEpargne(150.0, code, password);
+            Compte newCompte = new CompteEpargne(150.0, code, password);
             comptes.put(code, newCompte);
             LoggedInAccount = newCompte;
             return newCompte;
@@ -62,8 +63,15 @@ public class Main {
                 System.out.println("1. Create Accout");
                 System.out.println("2. Log in");
                 System.out.println("3. Exit");
-                System.out.println("Choose a number (1-3): ");
-                int choice = sc.nextInt();
+                int choice = -1;
+
+                try {
+                    System.out.println("Choose a number (1-3): ");
+                    choice = sc.nextInt();
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input! Please enter a number, not random nonsense.");
+                    sc.nextLine();
+                }
 
                 sc.nextLine();
 
@@ -136,16 +144,25 @@ public class Main {
                 if(LoggedInAccount instanceof CompteCourant){
                     System.out.println("3. Logout");
                 }
-                System.out.println("Choose a number: ");
 
-                int choice = sc.nextInt();
+                int choice = 0;
+
+                try{
+                    System.out.println("Choose a number: ");
+                    choice = sc.nextInt();
+                }
+                catch (InputMismatchException e){
+                    System.out.println("Please enter a valid number!");
+                    sc.nextLine();
+                }
 
                 sc.nextLine();
 
                 switch (choice) {
                     case 1:
                         System.out.println("\n ACCOUNT INFORMATION'S --------");
-                        System.out.println("Account ID: " + LoggedInAccount.getCode());
+                        System.out.println("Account ID: " + LoggedInAccount.
+                                getCode());
                         System.out.println("Solde: " + LoggedInAccount.getSolde() + " " + currency);
                         if (LoggedInAccount instanceof CompteCourant) {
                             CompteCourant courantAccount = (CompteCourant) LoggedInAccount;
@@ -154,8 +171,15 @@ public class Main {
                         break;
                     case 2:
                         System.out.println("\n WITHDRAW --------");
-                        System.out.println("Enter amount you want to withdraw: ");
-                        double amount = sc.nextDouble();
+                        double amount = 0;
+                        try{
+                            System.out.println("Enter amount you want to withdraw: ");
+                            amount = sc.nextDouble();
+                        }
+                        catch (InputMismatchException e){
+                            System.out.println("Please enter a valid number!");
+                            sc.nextLine();
+                        }
                         System.out.println(LoggedInAccount.retirer(amount));
                         break;
                     case 3:
@@ -166,8 +190,15 @@ public class Main {
                             System.out.println("Congratulations, Interet applicated successfuly!");
                         }else{
                             System.out.println("LOGOUT --------");
-                            System.out.println("Do you want to log out (1. Yes / 2. No): ");
-                            int wantToLogOut = sc.nextInt();
+                            int wantToLogOut = 0;
+                            try{
+                                System.out.println("Do you want to log out (1. Yes / 2. No): ");
+                                wantToLogOut = sc.nextInt();
+                            }
+                            catch (InputMismatchException e){
+                                System.out.println("Please enter a valid number!");
+                                sc.nextLine();
+                            }
                             if (wantToLogOut == 1) {
                                 isLoggedIn = false;
                                 LoggedInAccount = null;
@@ -178,8 +209,15 @@ public class Main {
                     case 4:
                         if(LoggedInAccount instanceof CompteEpargne){
                             System.out.println("LOGOUT --------");
-                            System.out.println("Do you want to log out (1. Yes / 2. No): ");
-                            int wantToLogOut = sc.nextInt();
+                            int wantToLogOut = 0;
+                            try{
+                                System.out.println("Do you want to log out (1. Yes / 2. No): ");
+                                wantToLogOut = sc.nextInt();
+                            }
+                            catch (InputMismatchException e){
+                                System.out.println("Please enter a valid number!");
+                                sc.nextLine();
+                            }
                             if (wantToLogOut == 1) {
                                 isLoggedIn = false;
                                 LoggedInAccount = null;

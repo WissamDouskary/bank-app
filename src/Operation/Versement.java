@@ -1,6 +1,8 @@
 package Operation;
 
 
+import java.time.LocalDateTime;
+
 public class Versement extends Operation{
     protected String source;
 
@@ -9,4 +11,15 @@ public class Versement extends Operation{
         this.source = source;
     }
 
+    public String getNumero() {
+        return "";
+    }
+
+    public LocalDateTime getDate() {
+        return null;
+    }
+
+    public double getMontant() {
+        return 0;
+    }
 }

@@ -3,7 +3,7 @@ package Operation;
 import java.time.LocalDateTime;
 import java.util.Random;
 
-public class Operation {
+public abstract class Operation {
     protected String numero;
     protected LocalDateTime date;
     protected double montant;
@@ -14,9 +14,9 @@ public class Operation {
         this.montant = montant;
     }
 
-    public String getNumero() { return numero; }
-    public LocalDateTime getDate() { return date; }
-    public double getMontant() { return montant; }
+    public abstract String getNumero();
+    public abstract LocalDateTime getDate();
+    public abstract double getMontant();
 
     public Integer generateOperationNumber(){
         Random rn = new Random();

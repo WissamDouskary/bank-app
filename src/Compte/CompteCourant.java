@@ -41,7 +41,6 @@ public class CompteCourant extends Compte{
         else {
             message = "You don't have enough money to withdraw!";
         }
-
         return message;
     }
 
