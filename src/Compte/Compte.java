@@ -24,8 +24,8 @@ public abstract class Compte {
         this.solde = solde;
     }
 
-    public void setListOperations(ArrayList<String> listOperations) {
-        this.listOperations = listOperations;
+    public void setListOperations(String listOperations) {
+        this.listOperations.add(listOperations);
     }
 
     public ArrayList<String> getListOperations() {

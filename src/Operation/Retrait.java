@@ -1,25 +1,42 @@
 package Operation;
 
 
+import Compte.Compte;
+
 import java.time.LocalDateTime;
 
-public class Retrait extends Operation{
-    protected String destination;
+public class Retrait extends Operation {
+    private String destination;
 
-    public Retrait(double montant, String destination){
+    public Retrait(double montant, String destination) {
         super(montant);
         this.destination = destination;
     }
 
+    @Override
     public String getNumero() {
-        return "";
+        return numero;
     }
 
+    @Override
     public LocalDateTime getDate() {
-        return null;
+        return date;
     }
 
+    @Override
     public double getMontant() {
-        return 0;
+        return montant;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public String makeVersement(Compte sender, Compte reciever){
+        return "mes";
+    }
+
+    public String saveOperation(){
+        return "mes";
     }
 }

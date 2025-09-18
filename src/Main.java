@@ -1,7 +1,10 @@
 import Compte.Compte;
 import Compte.CompteCourant;
 import Compte.CompteEpargne;
-import sun.rmi.runtime.Log;
+
+import Operation.Retrait;
+import Operation.Versement;
+import Operation.Operation;
 
 import java.util.HashMap;
 import java.util.InputMismatchException;
@@ -40,6 +43,7 @@ public class Main {
         for(String i : comptes.keySet()){
             if(code.equals(i)){
                 System.out.println("Type your account password: ");
+                sc.nextLine();
                 String password = sc.nextLine();
                 if(comptes.get(i).getPassword().equals(password)){
                     existingAcc = comptes.get(i);
@@ -118,7 +122,6 @@ public class Main {
                         String codeFormat = "CPT-"+loginCode;
                         while(!codeFormat.matches("CPT-\\d{5}")){
                             System.out.println("Type your Account Code (CPT-XXXXX) with 5 numbers:");
-                            loginCode = sc.nextInt();
                             codeFormat = "CPT-"+loginCode;
                         }
                         Compte existingAcc = logIn(codeFormat);
@@ -144,6 +147,9 @@ public class Main {
                 if(LoggedInAccount instanceof CompteCourant){
                     System.out.println("3. Logout");
                 }
+
+                System.out.println("5. Make a transfer between accounts");
+                System.out.println("6. View List Of Transactions");
 
                 int choice = 0;
 
@@ -224,6 +230,61 @@ public class Main {
                                 System.out.println("You have successfully logged out.");
                             }
                         }
+                        break;
+                    case 5:
+                        System.out.println("VERSEMENT----------------");
+                        System.out.println("Enter Code of reciever (CPT-XXXXX / X is number!): ");
+                        int code = sc.nextInt();
+                        String form = "CPT-"+code;
+
+                        Compte recieverAcc = null;
+
+                        while(!form.matches("CPT-\\d{5}")){
+                            System.out.println("You have an issue, please enter 5 numbers for UUID: ");
+                            code = sc.nextInt();
+                            form = "CPT-"+code;
+                        }
+
+                        for(String i : comptes.keySet()){
+                            if(form.equals(i)){
+                                recieverAcc = comptes.get(i);
+                                System.out.println("user found");
+                                break;
+                            }else{
+                                System.out.println("user not found, check your cardinals!");
+                            }
+                        }
+
+                        System.out.println("Type amount you want to send: ");
+                        double versementAmount = sc.nextDouble();
+                        System.out.println("Type source of this money:");
+                        System.out.println("1. Virement externe");
+                        System.out.println("2. Dépôt espèces");
+                        System.out.println("3. Salaire");
+                        System.out.println("Select a number (1-3): ");
+                        sc.nextLine();
+
+                        int choiceType = sc.nextInt();
+                        String versementType = null;
+
+                        switch (choiceType){
+                            case 1:
+                                versementType = "Virement externe";
+                                break;
+                            case 2:
+                                versementType = "Dépôt espèces";
+                                break;
+                            case 3:
+                                versementType = "Salaire";
+                                break;
+                            default:
+                                System.out.println("invalid selection!");
+                                break;
+                        }
+                        Operation versement = new Versement(versementAmount, versementType);
+                        versement.makeVersement(LoggedInAccount, recieverAcc);
+                        LoggedInAccount.setListOperations(versement.saveOperation());
+                        System.out.println("Versement done!");
                         break;
                     default:
                         System.out.println("invalid choice");
