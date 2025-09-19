@@ -69,6 +69,6 @@ Before running the project, make sure you have:
 ---
 
 ## 🖼 Screenshots
-*(Add screenshots of your console app running here, e.g. menu, account creation, transactions, etc.)*
+![menu text](https://github.com/WissamDouskary/bank-app/tree/main/images/loginpage.png?raw=true)
 
 Example placeholder:  
