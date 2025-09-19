@@ -1,41 +1,74 @@
-<h1 align="center">🌍💳 Bank Account Management System</h1>
+## 📖 Project Description
+This project is a **console-based banking management system** developed in **Java 8**.  
+The goal is to automate the management of bank accounts and their operations (deposits, withdrawals, transfers) through a structured and layered application.  
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Java-8-red?style=for-the-badge&logo=java&logoColor=white">
-  <img src="https://img.shields.io/badge/Console-App-blue?style=for-the-badge&logo=gnubash&logoColor=white">
-  <img src="https://img.shields.io/badge/Clean%20Architecture-✔-brightgreen?style=for-the-badge">
-  <img src="https://img.shields.io/badge/License-MIT-purple?style=for-the-badge">
-</p>
+The system allows creating accounts (current or savings), managing transactions, and viewing account details and history, all while ensuring validation rules and error handling.
 
 ---
 
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?size=24&duration=4000&pause=1000&color=00C853&center=true&vCenter=true&width=700&lines=Welcome+to+the+Bank+System;Bienvenue+dans+le+Système+Bancaire;مرحبا+بكم+في+النظام+البنكي">
-</p>
+## 🛠 Technologies Used
+- **Java 8**
+- **Java Collections Framework** (`ArrayList`, `HashMap`)
+- **Java Time API** for date management
+- **Exception Handling** with `try-catch`
+- **UUID** for unique identifiers in operations
 
 ---
 
-<h3 align="center">🌐 Choose your language / Choisissez votre langue / اختر لغتك</h3>
+## 📂 Project Structure
+The application is organized into different layers to ensure maintainability and clarity:
 
-<p align="center">
-  <a href="README.en.md">
-    <img src="https://img.shields.io/badge/🇬🇧 English-1E90FF?style=for-the-badge&logo=github&logoColor=white">
-  </a>
-  <a href="README.fr.md">
-    <img src="https://img.shields.io/badge/🇫🇷 Français-FF0000?style=for-the-badge&logo=gitlab&logoColor=white">
-  </a>
-  <a href="README.ar.md">
-    <img src="https://img.shields.io/badge/🇲🇦 العربية-228B22?style=for-the-badge&logo=googletranslate&logoColor=white">
-  </a>
-</p>
+1. **Presentation Layer (UI/Menu)**  
+   - Interactive console-based menu for user interaction.
+
+2. **Business Layer**  
+   - Handles account and operation logic.  
+   - Implements rules for withdrawals, interests, and transfers.
+
+3. **Utility Layer**  
+   - Input validation (positive amounts, account code format, etc.).  
+   - Helper methods for reusability.
+
+4. **Data Layer (in-memory)**  
+   - Accounts and operations stored in `HashMap` and `ArrayList` until program termination.  
 
 ---
 
-<p align="center">
-  ✨ <em>A modern Java 8 console banking app with multilingual documentation, clean architecture, and professional design.</em> ✨
-</p>
+## 📦 Class Overview
+- **`Compte` (Abstract Class)**  
+  - Attributes: `code`, `solde`, `listeOperations`  
+  - Abstract methods: `retirer()`, `calculerInteret()`, `afficherDetails()`  
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Platane/snk/output/github-contribution-grid-snake.svg" alt="snake animation" />
-</p>
+- **`CompteCourant` (Inherits Compte)**  
+  - Extra attribute: `decouvert`  
+  - `calculerInteret()` always returns 0  
+  - Withdrawal rule: balance must not go below `-decouvert`
 
+- **`CompteEpargne` (Inherits Compte)**  
+  - Extra attribute: `tauxInteret`  
+  - `calculerInteret()` computes interest  
+  - Withdrawal rule: allowed only if balance ≥ amount to withdraw  
+
+- **`Operation` (Abstract Class)**  
+  - Attributes: `numero (UUID)`, `date`, `montant`  
+
+- **`Versement` (Inherits Operation)**  
+  - Extra attribute: `source`  
+
+- **`Retrait` (Inherits Operation)**  
+  - Extra attribute: `destination`  
+
+---
+
+## ✅ Prerequisites
+Before running the project, make sure you have:
+- **Java 8 or higher** installed
+- A terminal/command line interface
+- (Optional) IntelliJ IDEA or Eclipse for development
+
+---
+
+## 🖼 Screenshots
+*(Add screenshots of your console app running here, e.g. menu, account creation, transactions, etc.)*
+
+Example placeholder:  
