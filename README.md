@@ -89,7 +89,7 @@ BANK ACCOUNT ===========================
 2. Withdraw
 3. Logout
 4. Make a transfer between accounts
-5. View List Of Transactions
+5. View List Of Transactions <br>
 =======================================
 
 
