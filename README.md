@@ -69,6 +69,38 @@ Before running the project, make sure you have:
 ---
 
 ## 🖼 Screenshots
-*(Add screenshots of your console app running here, e.g. menu, account creation, transactions, etc.)*
+
+#### REGISTRATION PAGE
+![menu text](./images/loginpage.png)
+
+#### HOME PAGE
+![menu text](./images/home.png)
+
+#### ACCOUNT INFOS
+![menu text](./images/accinfos.png)
+
+#### WITHDRAW
+![menu text](./images/withdraw.png)
 
 Example placeholder:  
+
+BANK ACCOUNT ===========================
+1. Account Information"
+2. Withdraw
+3. Logout
+4. Make a transfer between accounts
+5. View List Of Transactions <br>
+=======================================
+
+
+---
+
+## 🚀 Features
+- Create Current or Savings accounts  
+- Make deposits, withdrawals, and transfers  
+- View account balance  
+- View operations history per account  
+- Input validation (positive amounts, correct account code format `CPT-XXXXX`)  
+- Exception handling to avoid crashes  
+
+---
