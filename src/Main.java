@@ -34,30 +34,36 @@ public class Main {
         }
     }
 
-    public static Compte logIn(String code){
+    public static Compte logIn(String code) {
         Compte existingAcc = null;
+        boolean isFound = false;
 
-        if(comptes.isEmpty()){
+        if (comptes.isEmpty()) {
             System.out.println("There is no account on storage!");
         }
 
-        for(String i : comptes.keySet()){
-            if(code.equals(i)){
+        for (String i : comptes.keySet()) {
+            if (code.equals(i)) {
                 System.out.println("Type your account password: ");
                 sc.nextLine();
                 String password = sc.nextLine();
-                if(comptes.get(i).getPassword().equals(password)){
+                if (comptes.get(i).getPassword().equals(password)) {
                     existingAcc = comptes.get(i);
                     LoggedInAccount = existingAcc;
                     isLoggedIn = true;
+                    isFound = true;
+                    System.out.println("Welcome!");
                     break;
-                }else{
+                } else {
                     System.out.println("invalid cardinals!");
+                    break;
                 }
-            }else{
+            }
+            if (!isFound) {
                 System.out.println("Account doesn't found, check you cardinals!");
             }
         }
+
         return existingAcc;
     }
 
@@ -67,7 +73,6 @@ public class Main {
             try {
                 System.out.println(prompt);
                 number = sc.nextInt();
-                sc.nextLine();
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input! Please enter a valid number.");
@@ -77,10 +82,10 @@ public class Main {
         return number;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         boolean isClaimed = false;
-        while(true){
-            if(!isLoggedIn && LoggedInAccount == null){
+        while (true) {
+            if (!isLoggedIn && LoggedInAccount == null) {
                 System.out.println("BANK ACCOUNT ----");
                 System.out.println("1. Create Accout");
                 System.out.println("2. Log in");
@@ -90,50 +95,46 @@ public class Main {
 
                 sc.nextLine();
 
-                switch (choice){
+                switch (choice) {
                     case 1:
                         System.out.println("REGISTRATION -------------");
                         int code = intValidator("Enter code (just numbers) you want for you account (CPT-XXXXX): ");
-                        String form = "CPT-"+code;
-                        while(!form.matches("CPT-\\d{5}")){
+                        String form = "CPT-" + code;
+                        while (!form.matches("CPT-\\d{5}")) {
                             System.out.println("You have an issue, please enter 5 numbers for UUID: ");
                             code = sc.nextInt();
-                            form = "CPT-"+code;
+                            form = "CPT-" + code;
                         }
-                        for(String i : comptes.keySet()){
-                            while(form.equals(i)){
-                                System.out.println("This code is defined before, please choose another one: ");
-                                code = sc.nextInt();
-                                form = "CPT-"+code;
+                        for (String i : comptes.keySet()) {
+                            while (form.equals(i)) {
+                                code = intValidator("This code is defined before, please choose another one: ");
+                                form = "CPT-" + code;
                             }
                         }
 
                         sc.nextLine();
 
-                        System.out.println("Enter account type (1. Courant / 2. Epargne): ");
-                        int type = sc.nextInt();
+                        int type = intValidator("Enter account type (1. Courant / 2. Epargne): ");
                         while (type != 1 && type != 2) {
-                            System.out.println("Please enter a valid type (1. Courant / 2. Epargne): ");
-                            type = sc.nextInt();
+                            type = intValidator("Please enter a valid type (1. Courant / 2. Epargne): ");
                         }
                         System.out.println("Enter your password (more than 8 caracters): ");
                         String password = sc.nextLine();
-                        while(password.length() <= 8){
+                        while (password.length() <= 8) {
                             System.out.println("please enter a strong password (more than 8 caracters): ");
                             password = sc.nextLine();
                         }
-                        createAccount(type, "CPT-"+code, password);
+                        createAccount(type, "CPT-" + code, password);
                         System.out.println("account created success!");
                         isLoggedIn = true;
                         break;
                     case 2:
                         System.out.println("LOGIN --------");
-                        System.out.println("Type your Account Code (CPT-XXXXX):");
-                        int loginCode = sc.nextInt();
-                        String codeFormat = "CPT-"+loginCode;
-                        while(!codeFormat.matches("CPT-\\d{5}")){
+                        int loginCode = intValidator("Type your Account Code (CPT-XXXXX):");
+                        String codeFormat = "CPT-" + loginCode;
+                        while (!codeFormat.matches("CPT-\\d{5}")) {
                             System.out.println("Type your Account Code (CPT-XXXXX) with 5 numbers:");
-                            codeFormat = "CPT-"+loginCode;
+                            codeFormat = "CPT-" + loginCode;
                         }
                         Compte existingAcc = logIn(codeFormat);
                         break;
@@ -145,17 +146,17 @@ public class Main {
                         System.out.println("Invalid choice!");
                         break;
                 }
-            }else{
+            } else {
                 System.out.println("BANK ACCOUNT ----");
                 System.out.println("1. Account Information");
                 System.out.println("2. Withdraw");
-                if(LoggedInAccount instanceof CompteEpargne){
-                    if(!isClaimed){
+                if (LoggedInAccount instanceof CompteEpargne) {
+                    if (!isClaimed) {
                         System.out.println("3. Apply Interet");
                     }
                     System.out.println(isClaimed ? "3. Logout" : "4. Logout");
                 }
-                if(LoggedInAccount instanceof CompteCourant){
+                if (LoggedInAccount instanceof CompteCourant) {
                     System.out.println("3. Logout");
                 }
 
@@ -164,11 +165,10 @@ public class Main {
 
                 int choice = 0;
 
-                try{
+                try {
                     System.out.println("Choose a number: ");
                     choice = sc.nextInt();
-                }
-                catch (InputMismatchException e){
+                } catch (InputMismatchException e) {
                     System.out.println("Please enter a valid number!");
                     sc.nextLine();
                 }
@@ -189,11 +189,10 @@ public class Main {
                     case 2:
                         System.out.println("\n WITHDRAW --------");
                         double amount = 0;
-                        try{
+                        try {
                             System.out.println("Enter amount you want to withdraw: ");
                             amount = sc.nextDouble();
-                        }
-                        catch (InputMismatchException e){
+                        } catch (InputMismatchException e) {
                             System.out.println("Please enter a valid number!");
                             sc.nextLine();
                         }
@@ -204,11 +203,10 @@ public class Main {
 
                         int Destchoice = 0;
                         String destination = null;
-                        try{
+                        try {
                             System.out.println("Choose a selection");
                             Destchoice = sc.nextInt();
-                        }
-                        catch (InputMismatchException e){
+                        } catch (InputMismatchException e) {
                             System.out.println("Please enter a valid number!");
                             sc.nextLine();
                         }
@@ -235,19 +233,18 @@ public class Main {
                         LoggedInAccount.setListOperations(retrait.saveOperation());
                         break;
                     case 3:
-                        if(LoggedInAccount instanceof CompteEpargne){
+                        if (LoggedInAccount instanceof CompteEpargne) {
                             CompteEpargne epargneAccount = (CompteEpargne) LoggedInAccount;
                             epargneAccount.appliquerInteret();
                             isClaimed = true;
                             System.out.println("Congratulations, Interet applicated successfuly!");
-                        }else{
+                        } else {
                             System.out.println("LOGOUT --------");
                             int wantToLogOut = 0;
-                            try{
+                            try {
                                 System.out.println("Do you want to log out (1. Yes / 2. No): ");
                                 wantToLogOut = sc.nextInt();
-                            }
-                            catch (InputMismatchException e){
+                            } catch (InputMismatchException e) {
                                 System.out.println("Please enter a valid number!");
                                 sc.nextLine();
                             }
@@ -259,14 +256,13 @@ public class Main {
                         }
                         break;
                     case 4:
-                        if(LoggedInAccount instanceof CompteEpargne){
+                        if (LoggedInAccount instanceof CompteEpargne) {
                             System.out.println("LOGOUT --------");
                             int wantToLogOut = 0;
-                            try{
+                            try {
                                 System.out.println("Do you want to log out (1. Yes / 2. No): ");
                                 wantToLogOut = sc.nextInt();
-                            }
-                            catch (InputMismatchException e){
+                            } catch (InputMismatchException e) {
                                 System.out.println("Please enter a valid number!");
                                 sc.nextLine();
                             }
@@ -279,83 +275,98 @@ public class Main {
                         break;
                     case 5:
                         System.out.println("VERSEMENT----------------");
-                        System.out.println("Enter Code of reciever (CPT-XXXXX / X is number!): ");
-                        int code = sc.nextInt();
-                        String form = "CPT-"+code;
 
-                        Compte recieverAcc = null;
-
-                        while(!form.matches("CPT-\\d{5}")){
-                            System.out.println("You have an issue, please enter 5 numbers for UUID: ");
-                            code = sc.nextInt();
-                            form = "CPT-"+code;
-                        }
-
+                        Compte receiverAcc = null;
                         boolean isFound = false;
 
                         while (!isFound) {
-                            System.out.print("Enter user code: ");
-                            String userEnter = sc.nextLine();
-                            String codeForm = "CPT-"+userEnter;
+                            System.out.print("Enter 5-digit recipient account number (UUID): ");
+                            String input = sc.nextLine();
 
-                            for (String i : comptes.keySet()) {
-                                if (codeForm.equals(i)) {
-                                    recieverAcc = comptes.get(i);
-                                    isFound = true;
-                                    break;
-                                }
+                            if (!input.matches("\\d{5}")) {
+                                System.out.println("Invalid format. Please enter exactly 5 digits.");
+                                continue;
                             }
 
-                            if (!isFound) {
+                            String codeForm = "CPT-" + input;
+
+                            if (!comptes.containsKey(codeForm)) {
                                 System.out.println("User not found! Please try again.");
+                            } else if (codeForm.equals(LoggedInAccount.getCode())) {
+                                System.out.println("You can't send money to yourself!");
+                            } else {
+                                receiverAcc = comptes.get(codeForm);
+                                isFound = true;
                             }
                         }
 
                         System.out.println("User Found.");
 
-                        System.out.println("Type amount you want to send: ");
-                        double versementAmount = sc.nextDouble();
+                        double versementAmount = 0;
+                        while (true) {
+                            System.out.print("Type amount you want to send: ");
+                            if (sc.hasNextDouble()) {
+                                versementAmount = sc.nextDouble();
+                                sc.nextLine();
+                                if (versementAmount > 0) break;
+                                else System.out.println("Amount must be positive.");
+                            } else {
+                                System.out.println("Invalid input. Please enter a number.");
+                                sc.nextLine();
+                            }
+                        }
+
                         System.out.println("Type source of this money:");
                         System.out.println("1. Virement externe");
                         System.out.println("2. Dépôt espèces");
                         System.out.println("3. Salaire");
-                        System.out.println("Select a number (1-3): ");
-                        sc.nextLine();
 
-                        int choiceType = sc.nextInt();
                         String versementType = null;
+                        while (versementType == null) {
+                            System.out.print("Select a number (1-3): ");
+                            if (sc.hasNextInt()) {
+                                int transfertChoice = sc.nextInt();
+                                sc.nextLine();
 
-                        switch (choiceType){
-                            case 1:
-                                versementType = "Virement externe";
-                                break;
-                            case 2:
-                                versementType = "Dépôt espèces";
-                                break;
-                            case 3:
-                                versementType = "Salaire";
-                                break;
-                            default:
-                                System.out.println("invalid selection!");
-                                break;
+                                switch (transfertChoice) {
+                                    case 1:
+                                        versementType = "Virement externe";
+                                        break;
+                                    case 2:
+                                        versementType = "Dépôt espèces";
+                                        break;
+                                    case 3:
+                                        versementType = "Salaire";
+                                        break;
+                                    default:
+                                        System.out.println("Invalid selection!");
+                                }
+                            } else {
+                                System.out.println("Invalid input.");
+                                sc.nextLine();
+                            }
                         }
+
                         Versement versement = new Versement(versementAmount, versementType);
-                        versement.makeOperation(LoggedInAccount, recieverAcc);
-                        LoggedInAccount.setListOperations(versement.saveOperation(LoggedInAccount.getCode(), recieverAcc.getCode()));
-                        recieverAcc.setListOperations(versement.saveOperation(LoggedInAccount.getCode()));
+                        versement.makeOperation(LoggedInAccount, receiverAcc);
+
+                        LoggedInAccount.setListOperations(versement.saveOperation(LoggedInAccount.getCode(), receiverAcc.getCode()));
+                        receiverAcc.setListOperations(versement.saveOperation(LoggedInAccount.getCode()));
+
                         System.out.println("Versement done!");
                         break;
+
                     case 6:
                         System.out.println("TRANSACTION HISTORY------");
-                        if(LoggedInAccount.getListOperations().isEmpty()){
+                        if (LoggedInAccount.getListOperations().isEmpty()) {
                             System.out.println("There is no transaction yet!");
                         }
-                        for(String t : LoggedInAccount.getListOperations()){
+                        for (String t : LoggedInAccount.getListOperations()) {
                             System.out.println(t);
                         }
                         break;
                     case 7:
-                        for(String i : comptes.keySet()){
+                        for (String i : comptes.keySet()) {
                             System.out.println(i);
                         }
                         break;
