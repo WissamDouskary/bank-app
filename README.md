@@ -104,3 +104,7 @@ BANK ACCOUNT ===========================
 - Exception handling to avoid crashes  
 
 ---
+
+
+## Class Diagrame
+![ClassDiagram](https://lucid.app/lucidchart/97e946b9-88d2-4d38-9f59-75524dab22a6/edit?viewport_loc=-1515%2C-926%2C2267%2C1060%2C0_0&invitationId=inv_d20c1ec8-3a8b-43d2-be9b-2d08c3274761)
