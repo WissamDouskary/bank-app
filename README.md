@@ -69,6 +69,7 @@ Before running the project, make sure you have:
 ---
 
 ## 🖼 Screenshots
+### REGISTRATION PAGE
 ![menu text](./images/loginpage.png)
 
 Example placeholder:  
