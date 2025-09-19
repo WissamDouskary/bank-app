@@ -86,10 +86,11 @@ public class Main {
         boolean isClaimed = false;
         while (true) {
             if (!isLoggedIn && LoggedInAccount == null) {
-                System.out.println("BANK ACCOUNT ----");
+                System.out.println("BANK ACCOUNT ============");
                 System.out.println("1. Create Accout");
                 System.out.println("2. Log in");
                 System.out.println("3. Exit");
+                System.out.println("==========================");
 
                 int choice = intValidator("choose a number (1-3)");
 
@@ -147,7 +148,7 @@ public class Main {
                         break;
                 }
             } else {
-                System.out.println("BANK ACCOUNT ----");
+                System.out.println("BANK ACCOUNT ===========================");
                 System.out.println("1. Account Information");
                 System.out.println("2. Withdraw");
                 if (LoggedInAccount instanceof CompteEpargne) {
@@ -160,8 +161,9 @@ public class Main {
                     System.out.println("3. Logout");
                 }
 
-                System.out.println("5. Make a transfer between accounts");
-                System.out.println("6. View List Of Transactions");
+                System.out.println("4. Make a transfer between accounts");
+                System.out.println("5. View List Of Transactions");
+                System.out.println("=======================================");
 
                 int choice = 0;
 
@@ -177,7 +179,7 @@ public class Main {
 
                 switch (choice) {
                     case 1:
-                        System.out.println("\n ACCOUNT INFORMATION'S --------");
+                        System.out.println("ACCOUNT INFORMATION'S =============");
                         System.out.println("Account ID: " + LoggedInAccount.
                                 getCode());
                         System.out.println("Solde: " + LoggedInAccount.getSolde() + " " + currency);
@@ -187,7 +189,7 @@ public class Main {
                         }
                         break;
                     case 2:
-                        System.out.println("\n WITHDRAW --------");
+                        System.out.println("\n WITHDRAW =============");
                         double amount = 0;
                         try {
                             System.out.println("Enter amount you want to withdraw: ");
@@ -239,7 +241,7 @@ public class Main {
                             isClaimed = true;
                             System.out.println("Congratulations, Interet applicated successfuly!");
                         } else {
-                            System.out.println("LOGOUT --------");
+                            System.out.println("LOGOUT =============");
                             int wantToLogOut = 0;
                             try {
                                 System.out.println("Do you want to log out (1. Yes / 2. No): ");
@@ -257,7 +259,7 @@ public class Main {
                         break;
                     case 4:
                         if (LoggedInAccount instanceof CompteEpargne) {
-                            System.out.println("LOGOUT --------");
+                            System.out.println("LOGOUT =============");
                             int wantToLogOut = 0;
                             try {
                                 System.out.println("Do you want to log out (1. Yes / 2. No): ");
@@ -274,7 +276,7 @@ public class Main {
                         }
                         break;
                     case 5:
-                        System.out.println("VERSEMENT----------------");
+                        System.out.println("VERSEMENT =============");
 
                         Compte receiverAcc = null;
                         boolean isFound = false;
@@ -357,7 +359,7 @@ public class Main {
                         break;
 
                     case 6:
-                        System.out.println("TRANSACTION HISTORY------");
+                        System.out.println("TRANSACTION HISTORY =============");
                         if (LoggedInAccount.getListOperations().isEmpty()) {
                             System.out.println("There is no transaction yet!");
                         }

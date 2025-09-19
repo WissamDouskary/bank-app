@@ -3,6 +3,7 @@ package Operation;
 import Compte.Compte;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class Versement extends Operation {
     private String source;
@@ -13,7 +14,7 @@ public class Versement extends Operation {
     }
 
     @Override
-    public String getNumero() {
+    public UUID getNumero() {
         return numero;
     }
 

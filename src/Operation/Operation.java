@@ -4,19 +4,21 @@ import Compte.Compte;
 
 import java.time.LocalDateTime;
 import java.util.Random;
+import java.util.UUID;
+
 
 public abstract class Operation {
-    protected String numero;
+    protected UUID numero;
     protected LocalDateTime date;
     protected double montant;
 
     public Operation(double montant) {
-        this.numero = generateOperationNumber().toString();
+        this.numero = UUID.randomUUID();
         this.date = LocalDateTime.now();
         this.montant = montant;
     }
 
-    public abstract String getNumero();
+    public abstract UUID getNumero();
     public abstract LocalDateTime getDate();
     public abstract double getMontant();
     public abstract String makeOperation();

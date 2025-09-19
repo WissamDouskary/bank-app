@@ -4,6 +4,7 @@ package Operation;
 import Compte.Compte;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class Retrait extends Operation {
     private String destination;
@@ -15,7 +16,7 @@ public class Retrait extends Operation {
 
 
     @Override
-    public String getNumero() {
+    public UUID getNumero() {
         return numero;
     }
 
