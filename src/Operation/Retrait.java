@@ -32,11 +32,11 @@ public class Retrait extends Operation {
         return destination;
     }
 
-    public String makeVersement(Compte sender, Compte reciever){
-        return "mes";
+    public String makeOperation(Compte sender, Compte reciever){
+        return "";
     }
 
     public String saveOperation(){
-        return "mes";
+        return "Retrait: number: "+getNumero()+" amount: "+ getMontant()+ "on :"+getDate();
     }
 }

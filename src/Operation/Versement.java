@@ -31,7 +31,7 @@ public class Versement extends Operation {
         return source;
     }
 
-    public String makeVersement(Compte sender, Compte reciever){
+    public String makeOperation(Compte sender, Compte reciever){
         if(sender.getSolde() < montant){
             return "you don't have enough money to send!";
         }else{
@@ -47,6 +47,10 @@ public class Versement extends Operation {
     }
 
     public String saveOperation(String senderCode, String recieverCode){
-        return "Versement :"+getNumero()+" from "+senderCode+" to "+recieverCode+" on"+getDate();
+        return "Versement : number: "+getNumero()+" from "+senderCode+" to "+recieverCode+" with amount "+getMontant()+"Dh on "+getDate();
+    }
+
+    public String saveOperation(String senderCode){
+        return "Versement : number: "+getNumero()+" from "+senderCode+" send amount "+getMontant()+"Dh on "+getDate();
     }
 }

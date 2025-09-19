@@ -19,7 +19,7 @@ public abstract class Operation {
     public abstract String getNumero();
     public abstract LocalDateTime getDate();
     public abstract double getMontant();
-    public abstract String makeVersement(Compte sender, Compte reciever);
+    public abstract String makeOperation(Compte sender, Compte reciever);
     public abstract String saveOperation();
 
     public Integer generateOperationNumber(){

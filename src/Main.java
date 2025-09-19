@@ -49,6 +49,7 @@ public class Main {
                     existingAcc = comptes.get(i);
                     LoggedInAccount = existingAcc;
                     isLoggedIn = true;
+                    break;
                 }else{
                     System.out.println("invalid cardinals!");
                 }
@@ -245,15 +246,27 @@ public class Main {
                             form = "CPT-"+code;
                         }
 
-                        for(String i : comptes.keySet()){
-                            if(form.equals(i)){
-                                recieverAcc = comptes.get(i);
-                                System.out.println("user found");
-                                break;
-                            }else{
-                                System.out.println("user not found, check your cardinals!");
+                        boolean isFound = false;
+
+                        while (!isFound) {
+                            System.out.print("Enter user code: ");
+                            String userEnter = sc.nextLine();
+                            String codeForm = "CPT-"+userEnter;
+
+                            for (String i : comptes.keySet()) {
+                                if (codeForm.equals(i)) {
+                                    recieverAcc = comptes.get(i);
+                                    isFound = true;
+                                    break;
+                                }
+                            }
+
+                            if (!isFound) {
+                                System.out.println("User not found! Please try again.");
                             }
                         }
+
+                        System.out.println("User Found.");
 
                         System.out.println("Type amount you want to send: ");
                         double versementAmount = sc.nextDouble();
@@ -281,10 +294,25 @@ public class Main {
                                 System.out.println("invalid selection!");
                                 break;
                         }
-                        Operation versement = new Versement(versementAmount, versementType);
-                        versement.makeVersement(LoggedInAccount, recieverAcc);
-                        LoggedInAccount.setListOperations(versement.saveOperation());
+                        Versement versement = new Versement(versementAmount, versementType);
+                        versement.makeOperation(LoggedInAccount, recieverAcc);
+                        LoggedInAccount.setListOperations(versement.saveOperation(LoggedInAccount.getCode(), recieverAcc.getCode()));
+                        recieverAcc.setListOperations(versement.saveOperation(LoggedInAccount.getCode()));
                         System.out.println("Versement done!");
+                        break;
+                    case 6:
+                        System.out.println("TRANSACTION HISTORY------");
+                        if(LoggedInAccount.getListOperations().isEmpty()){
+                            System.out.println("There is no transaction yet!");
+                        }
+                        for(String t : LoggedInAccount.getListOperations()){
+                            System.out.println(t);
+                        }
+                        break;
+                    case 7:
+                        for(String i : comptes.keySet()){
+                            System.out.println(i);
+                        }
                         break;
                     default:
                         System.out.println("invalid choice");
