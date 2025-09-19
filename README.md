@@ -69,6 +69,6 @@ Before running the project, make sure you have:
 ---
 
 ## 🖼 Screenshots
-![menu text](https://github.com/WissamDouskary/bank-app/tree/main/images/loginpage.png?raw=true)
+![menu text](./images/loginpage.png)
 
 Example placeholder:  
