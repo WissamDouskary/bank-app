@@ -13,6 +13,7 @@ public class Retrait extends Operation {
         this.destination = destination;
     }
 
+
     @Override
     public String getNumero() {
         return numero;
@@ -32,11 +33,11 @@ public class Retrait extends Operation {
         return destination;
     }
 
-    public String makeOperation(Compte sender, Compte reciever){
+    public String makeOperation(){
         return "";
     }
 
     public String saveOperation(){
-        return "Retrait: number: "+getNumero()+" amount: "+ getMontant()+ "on :"+getDate();
+        return "Retrait: retraitID: "+getNumero()+" from "+getDestination()+" amount: "+ getMontant()+ "DH on Date :"+getDate();
     }
 }

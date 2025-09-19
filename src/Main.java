@@ -5,6 +5,7 @@ import Compte.CompteEpargne;
 import Operation.Retrait;
 import Operation.Versement;
 import Operation.Operation;
+import sun.rmi.runtime.Log;
 
 import java.util.HashMap;
 import java.util.InputMismatchException;
@@ -60,6 +61,22 @@ public class Main {
         return existingAcc;
     }
 
+    public static int intValidator(String prompt) {
+        int number = -1;
+        while (true) {
+            try {
+                System.out.println(prompt);
+                number = sc.nextInt();
+                sc.nextLine();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a valid number.");
+                sc.nextLine();
+            }
+        }
+        return number;
+    }
+
     public static void main(String[] args){
         boolean isClaimed = false;
         while(true){
@@ -68,23 +85,15 @@ public class Main {
                 System.out.println("1. Create Accout");
                 System.out.println("2. Log in");
                 System.out.println("3. Exit");
-                int choice = -1;
 
-                try {
-                    System.out.println("Choose a number (1-3): ");
-                    choice = sc.nextInt();
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid input! Please enter a number, not random nonsense.");
-                    sc.nextLine();
-                }
+                int choice = intValidator("choose a number (1-3)");
 
                 sc.nextLine();
 
                 switch (choice){
                     case 1:
                         System.out.println("REGISTRATION -------------");
-                        System.out.println("Enter code (just numbers) you want for you account (CPT-XXXXX): ");
-                        int code = sc.nextInt();
+                        int code = intValidator("Enter code (just numbers) you want for you account (CPT-XXXXX): ");
                         String form = "CPT-"+code;
                         while(!form.matches("CPT-\\d{5}")){
                             System.out.println("You have an issue, please enter 5 numbers for UUID: ");
@@ -98,6 +107,7 @@ public class Main {
                                 form = "CPT-"+code;
                             }
                         }
+
                         sc.nextLine();
 
                         System.out.println("Enter account type (1. Courant / 2. Epargne): ");
@@ -187,7 +197,42 @@ public class Main {
                             System.out.println("Please enter a valid number!");
                             sc.nextLine();
                         }
+                        System.out.println("Enter destination of this retrait: ");
+                        System.out.println("1. Distributeur ATM");
+                        System.out.println("2. Chèque");
+                        System.out.println("3. Virement sortant");
+
+                        int Destchoice = 0;
+                        String destination = null;
+                        try{
+                            System.out.println("Choose a selection");
+                            Destchoice = sc.nextInt();
+                        }
+                        catch (InputMismatchException e){
+                            System.out.println("Please enter a valid number!");
+                            sc.nextLine();
+                        }
+                        switch (Destchoice) {
+                            case 1:
+                                destination = "Distributeur ATM";
+                                break;
+                            case 2:
+                                destination = "Chèque";
+                                break;
+                            case 3:
+                                destination = "Virement sortant";
+                                break;
+                            default:
+                                System.out.println("Invalid selection");
+                                break;
+                        }
                         System.out.println(LoggedInAccount.retirer(amount));
+                        if (destination == null) {
+                            System.out.println("Invalid destination. Operation cancelled.");
+                            break;
+                        }
+                        Retrait retrait = new Retrait(amount, destination);
+                        LoggedInAccount.setListOperations(retrait.saveOperation());
                         break;
                     case 3:
                         if(LoggedInAccount instanceof CompteEpargne){
