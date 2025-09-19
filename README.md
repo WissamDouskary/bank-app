@@ -69,7 +69,17 @@ Before running the project, make sure you have:
 ---
 
 ## 🖼 Screenshots
+
 #### REGISTRATION PAGE
 ![menu text](./images/loginpage.png)
+
+#### HOME PAGE
+![menu text](./images/home.png.png)
+
+#### ACCOUNT INFOS
+![menu text](./images/accinfos.png)
+
+#### WITHDRAW
+![menu text](./images/withdraw.png)
 
 Example placeholder:  
